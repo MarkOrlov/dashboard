@@ -1,5 +1,8 @@
 <script setup>
+
+import { ref } from 'vue';
 import MyHeader from '@/components/MyHeader.vue';
+import MyStageDialog from '@/components/MyStageDialog.vue';
 import MyStage from '@/components/MyStage.vue';
 import MyEmptyStage from '@/components/MyEmptyStage.vue';
 
@@ -8,27 +11,41 @@ import { useTasksStore } from '@/stores/taskStore';
 
 const stages = useStagesStore();
 const tasks = useTasksStore();
-const myStages = stages.getSortedStages;
+const stageIdToEdit = ref(undefined);
+const myStages = ref([]);
+myStages.value = stages.getSortedStages;
+
+const showStageDialog = ref(false);
 
 const goRight = (id) => {
     stages.goRight(id);
-    // stages.getSortedStages;
+    stages.getSortedStages;
 }
 
 const goLeft = (id) => {
     stages.goLeft(id);
-    // stages.getSortedStages;
+    stages.getSortedStages;
 }
 
 const addStage = () => {
     stages.addStage();
-    // stages.getSortedStages;
+    stages.getSortedStages;
 }
 
-const addNewTask = (stageId) => {
-    tasks.addTask(stageId);
+const deleteStage = (id) => {
+    tasks.deleteTaskByStage(id);
+    stages.deleteStage(id);
+    myStages.value = stages.getSortedStages;
 }
 
+const openStageEditDialog = (id) => {
+    stageIdToEdit.value = id;
+    showStageDialog.value = true;
+}
+
+const closeDialog = () => {
+    showStageDialog.value = false
+}
 
 </script>
 
@@ -37,9 +54,11 @@ const addNewTask = (stageId) => {
     <div class="stage-wrapper">
         <MyStage v-for="(stage) in myStages" :key="stage.id" :id="stage.id" :number="stage.number" :name="stage.name"
             :color="stage.color" :stagesLength="myStages.length" :goRight="goRight" :goLeft="goLeft"
-            :addNewTask="addNewTask" />
+            :openStageEditDialog="openStageEditDialog" />
         <MyEmptyStage @click="addStage" />
     </div>
+
+    <MyStageDialog v-if="showStageDialog" :id="stageIdToEdit" :deleteStage="deleteStage" :closeDialog="closeDialog" />
 </template>
 
 
@@ -47,4 +66,5 @@ const addNewTask = (stageId) => {
     .stage-wrapper
         display: flex
         margin: 10px
+        z-index: 100
 </style>

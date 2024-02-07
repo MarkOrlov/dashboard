@@ -39,10 +39,14 @@ export const useStagesStore = defineStore("stagesStore", {
             stage.number--;
         },
         addStage() {
-            this.stages.push({id: this.stages.length, number: this.stages.length+1, name: `Stage ${this.stages.length+1}`, color: "#fff"})
+            this.stages.push({id: this.stages.length, number: this.stages.length+1, name: `Stage ${this.stages.length+1}`, color: "#ffffff"})
+        },
+        deleteStage(id) {
+            this.stages = this.stages.filter(stage => stage.id !== id);
         }
     },
     getters: {
         getSortedStages: (state) => state.stages.sort((a, b) => a.number - b.number),
+        getStage: (state) => (stageId) => state.stages.find(stage => stage.id === stageId),
     }
 });
