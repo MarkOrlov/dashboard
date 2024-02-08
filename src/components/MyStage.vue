@@ -6,10 +6,8 @@ import MyTask from '@/components/MyTask.vue';
 import MyEmptyTask from '@/components/MyEmptyTask.vue';
 import MyTaskDialog from '@/components/MyTaskDialog.vue';
 import { useTasksStore } from '@/stores/taskStore';
-// import { useStagesStore } from '@/stores/stageStore';
 
 const tasks = useTasksStore();
-// const stages = useStagesStore();
 
 const props = defineProps({
     id: Number,
@@ -22,21 +20,17 @@ const props = defineProps({
     openStageEditDialog: Function
 })
 
-const tasksList = ref([]);
 const showTaskDialog = ref(false);
 const taskIdToEdit = ref(undefined);
 
-tasksList.value = tasks.getStageTasks(props.id);
 
 const addNewTask = (id) => {
     tasks.addTask(id);
-    tasksList.value = tasks.getStageTasks(props.id);
 }
 
 const deleteTask = (id) => {
     console.log(id);
     tasks.deleteTask(id);
-    tasksList.value = tasks.getStageTasks(props.id);
 }
 
 const openTaskEditDialog = (id) => {
@@ -49,10 +43,22 @@ const closeDialog = () => {
     showTaskDialog.value = false;
 }
 
+const onDragStart = (event, task) => {
+    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('taskId', task.id.toString());
+}
+
+const onDrop = (event, stageId) => {
+    const taskId = event.dataTransfer.getData('taskId');
+    tasks.changeTaskStage(parseInt(taskId), stageId);
+}
+
 </script>
 
 <template>
-    <div class="stage" :style="`background-color: ${color};`">
+    <div class="stage" :style="`background-color: ${color};`" @dragover.prevent @dragenter.prevent
+        @drop="onDrop($event, props.id)">
         <div class="stage-header">
             <div class="stage-arrow">
                 <img src="../assets/left.svg" alt="left" v-if="number !== 1" @click="goLeft(props.id)">
@@ -66,8 +72,9 @@ const closeDialog = () => {
         </div>
         <div class="stage-items">
             <div>
-                <MyTask v-for="(task) in tasksList" :key="task.id" :id="task.id" :stageId="task.stageId"
-                    :description="task.description" :name="task.name" @click="openTaskEditDialog(task.id)" />
+                <MyTask v-for="(task) in tasks.getStageTasks(props.id)" :key="task.id" :id="task.id" :stageId="task.stageId"
+                    :description="task.description" :name="task.name" @click="openTaskEditDialog(task.id)" draggable="true"
+                    @dragstart="onDragStart($event, task)" />
                 <MyEmptyTask @click="addNewTask(id)" />
             </div>
         </div>
@@ -77,7 +84,6 @@ const closeDialog = () => {
 
 <style lang="sass">
     .stage
-        min-height: 500px
         width: 200px
         height: auto
         margin: 10px

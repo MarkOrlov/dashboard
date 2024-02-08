@@ -12,30 +12,24 @@ import { useTasksStore } from '@/stores/taskStore';
 const stages = useStagesStore();
 const tasks = useTasksStore();
 const stageIdToEdit = ref(undefined);
-const myStages = ref([]);
-myStages.value = stages.getSortedStages;
 
 const showStageDialog = ref(false);
 
 const goRight = (id) => {
     stages.goRight(id);
-    stages.getSortedStages;
 }
 
 const goLeft = (id) => {
     stages.goLeft(id);
-    stages.getSortedStages;
 }
 
 const addStage = () => {
     stages.addStage();
-    stages.getSortedStages;
 }
 
 const deleteStage = (id) => {
     tasks.deleteTaskByStage(id);
     stages.deleteStage(id);
-    myStages.value = stages.getSortedStages;
 }
 
 const openStageEditDialog = (id) => {
@@ -50,19 +44,26 @@ const closeDialog = () => {
 </script>
 
 <template>
-    <MyHeader />
-    <div class="stage-wrapper">
-        <MyStage v-for="(stage) in myStages" :key="stage.id" :id="stage.id" :number="stage.number" :name="stage.name"
-            :color="stage.color" :stagesLength="myStages.length" :goRight="goRight" :goLeft="goLeft"
-            :openStageEditDialog="openStageEditDialog" />
-        <MyEmptyStage @click="addStage" />
-    </div>
+    <div class="main-wrapper">
+        <MyHeader />
+        <div class="stage-wrapper">
+            <MyStage v-for="(stage) in stages.getSortedStages" :key="stage.id" :id="stage.id" :number="stage.number"
+                :name="stage.name" :color="stage.color" :stagesLength="stages.stages.length" :goRight="goRight"
+                :goLeft="goLeft" :openStageEditDialog="openStageEditDialog" />
+            <MyEmptyStage @click="addStage" />
+        </div>
 
-    <MyStageDialog v-if="showStageDialog" :id="stageIdToEdit" :deleteStage="deleteStage" :closeDialog="closeDialog" />
+        <MyStageDialog v-if="showStageDialog" :id="stageIdToEdit" :deleteStage="deleteStage" :closeDialog="closeDialog" />
+    </div>
 </template>
 
 
 <style lang="sass">
+    .main-wrapper
+        display: grid
+        grid-template-columns: 1fr
+        grid-template-rows: 75px 1fr
+
     .stage-wrapper
         display: flex
         margin: 10px

@@ -38,6 +38,10 @@ export const useTasksStore = defineStore("tasksStore", {
         },
         deleteTaskByStage(stageId) {
             this.tasks = this.tasks.filter(task => task.stageId !== stageId);
+        },
+        changeTaskStage(taskId, stageId) {
+            console.log('task', taskId, 'stage', stageId);
+            this.tasks.find(task => task.id === taskId).stageId = stageId;
         }
     }
 
