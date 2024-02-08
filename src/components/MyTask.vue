@@ -12,16 +12,26 @@ const props = defineProps({
 
 <template>
     <div class="task">
-        {{ props.name }}
+        <div class="task-name">
+            <b>
+                {{ props.name }}
+            </b>
+        </div>
+        <div class="task-description">
+            <p>
+                {{ props.description }}
+            </p>
+        </div>
     </div>
 </template>
 
 <style lang="sass">
     .task
-        height: 50px
         margin: 10px
         padding: 3px
         border: 1px solid black
         border-radius: 5px
 
+    .task-description
+        word-wrap: break-word
 </style>

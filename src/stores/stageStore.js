@@ -7,19 +7,19 @@ export const useStagesStore = defineStore("stagesStore", {
                 id: 0,
                 number: 1,
                 name: "Stage 1",
-                color: "#f44336",
+                color: "#ff968f",
             },
             {
                 id: 1,
                 number: 2,
                 name: "Stage 2",
-                color: "#9c27b0",
+                color: "#f3adff",
             },
             {
                 id: 2,
                 number: 3,
                 name: "Stage 3",
-                color: "#1122b2",
+                color: "#b4bbfe",
             }
         ],
     }),
@@ -42,7 +42,9 @@ export const useStagesStore = defineStore("stagesStore", {
             this.stages.push({id: this.stages.length, number: this.stages.length+1, name: `Stage ${this.stages.length+1}`, color: "#ffffff"})
         },
         deleteStage(id) {
+            const number = this.stages.find(stage => stage.id === id).number;
             this.stages = this.stages.filter(stage => stage.id !== id);
+            this.stages = this.stages.map(stage => ({id: stage.id, number: stage.number < number ? stage.number : stage.number - 1, name: stage.name, color: stage.color}));
         }
     },
     getters: {

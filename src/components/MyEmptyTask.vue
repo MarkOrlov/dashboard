@@ -11,6 +11,7 @@
 <style lang="sass">
     .empty-task
         border: 3px dotted black
+        opacity: 0.4
 
 
 </style>

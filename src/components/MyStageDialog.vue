@@ -21,16 +21,24 @@ const stage = stages.getStage(props?.id);
     </div>
     <div class="dialog-wrapper">
         <div class="edit-dialog">
-            <input class="stage-name-input" type="text" v-model="stage.name">
-            <input class="stage-color-input" type="color" :name="stage.color" v-model="stage.color">
-            <div v-if="showConfirmButtons">
-                <button class="my-btn btn-confirm" type="button"
-                    @click="{ deleteStage(props.id); closeDialog() }">Yes</button>
-                <button class="my-btn btn-cancel" type="button" @click="showConfirmButtons = false">No</button>
+            <div>
+                <label for="name">Stage name</label>
+                <input name="name" class="stage-name-input" type="text" v-model="stage.name">
             </div>
-            <div v-else>
-                <button class="my-btn" type="button" @click="showConfirmButtons = true">Delete</button>
-                <button class="my-btn" type="button" @click="closeDialog">Close</button>
+            <div>
+                <label for="color">Stage color</label>
+                <input class="stage-color-input" type="color" name="color" v-model="stage.color">
+            </div>
+            <div class="dialog-buttons">
+                <div v-if="showConfirmButtons">
+                    <button class="my-btn btn-confirm" type="button"
+                        @click="{ deleteStage(props.id); closeDialog() }">Yes</button>
+                    <button class="my-btn btn-cancel" type="button" @click="showConfirmButtons = false">No</button>
+                </div>
+                <div v-else>
+                    <button class="my-btn" type="button" @click="showConfirmButtons = true">Delete</button>
+                    <button class="my-btn" type="button" @click="closeDialog">Close</button>
+                </div>
             </div>
         </div>
     </div>
