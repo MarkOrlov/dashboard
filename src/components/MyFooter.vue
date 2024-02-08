@@ -1,18 +1,13 @@
 <template>
-    <header>
-        <div class="header border-bottom-secondary bg-primary">
-            Dashboard
-        </div>
-    </header>
+    <div class="header border-bottom-secondary">
+        Dashboard
+    </div>
 </template>
 
 <style lang="sass">
 .header
-    position: fixed
-    top: 0
-    z-index: 1000 
-    width: 100%
     height: 75px
+    // width: 100vw
     color: white
     display: flex
     justify-content: center
