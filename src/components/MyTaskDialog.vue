@@ -21,17 +21,25 @@ const task = tasks.getTask(props?.id);
     </div>
     <div class="dialog-wrapper">
         <div class="edit-dialog">
-            <input class="task-name-input" type="text" v-model="task.name">
-            <div v-if="showConfirmButtons">
-                <button class="my-btn btn-confirm" type="button"
-                    @click="{ deleteTask(props.id); closeDialog() }">Yes</button>
-                <button class="my-btn btn-cancel" type="button" @click="showConfirmButtons = false">No</button>
+            <div>
+                <label for="name">Task name</label>
+                <input name="name" class="task-name-input" type="text" v-model="task.name">
             </div>
-            <div v-else>
-                <button class="my-btn" type="button" @click="showConfirmButtons = true">Delete</button>
-                <button class="my-btn" type="button" @click="closeDialog">Close</button>
+            <div>
+                <label for="description">Task description</label>
+                <textarea name="description" id="description" v-model="task.description"></textarea>
             </div>
-
+            <div class="dialog-buttons">
+                <div v-if="showConfirmButtons">
+                    <button class="my-btn btn-confirm" type="button"
+                        @click="{ deleteTask(props.id); closeDialog() }">Yes</button>
+                    <button class="my-btn btn-cancel" type="button" @click="showConfirmButtons = false">No</button>
+                </div>
+                <div v-else>
+                    <button class="my-btn" type="button" @click="showConfirmButtons = true">Delete</button>
+                    <button class="my-btn" type="button" @click="closeDialog">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -63,13 +71,19 @@ const task = tasks.getTask(props?.id);
         border: 2px solid black
         border-radius: 10px
         display: flex
-        flex-direction: row
+        flex-direction: column
 
     .edit-dialog>*
         margin: 10px
+        display: flex
+        flex-direction: column
+
+    .dialog-buttons>div
+        display: flex
+        justify-content: flex-end
 
     .my-btn
-        margin-right: 10px
+        margin-left: 10px
         padding: 5px
         border: 1px solid black
         border-radius: 5px

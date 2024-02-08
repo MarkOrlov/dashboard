@@ -53,7 +53,7 @@ const closeDialog = () => {
 
 <template>
     <div class="stage" :style="`background-color: ${color};`">
-        <div class="stage-header border-bottom-secondary">
+        <div class="stage-header">
             <div class="stage-arrow">
                 <img src="../assets/left.svg" alt="left" v-if="number !== 1" @click="goLeft(props.id)">
             </div>
@@ -78,7 +78,7 @@ const closeDialog = () => {
 <style lang="sass">
     .stage
         min-height: 500px
-        min-width: 200px
+        width: 200px
         height: auto
         margin: 10px
         border-radius: 5px
@@ -90,6 +90,7 @@ const closeDialog = () => {
         display: flex
         justify-content: space-between
         flex-direction: row
+        border-bottom: 1px solid black
 
     .stage-arrow
         cursor: pointer

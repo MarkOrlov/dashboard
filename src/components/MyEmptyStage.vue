@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div class="empty-stage stage">
+    <div class="stage empty-stage">
         <div>
             <img src="../assets/plus.svg" alt="plus">
         </div>
@@ -19,6 +19,6 @@
         flex-direction: column
         align-items: center
         cursor: pointer
-
+        opacity: 0.4
 
 </style>
