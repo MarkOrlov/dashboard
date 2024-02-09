@@ -7,6 +7,8 @@ import MyEmptyTask from '@/components/MyEmptyTask.vue';
 import MyTaskDialog from '@/components/MyTaskDialog.vue';
 import { useTasksStore } from '@/stores/taskStore';
 
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/outline'
+
 const tasks = useTasksStore();
 
 const props = defineProps({
@@ -56,19 +58,19 @@ const onDrop = (event, stageId) => {
 
 </script>
 
+
+
 <template>
     <div class="stage" :style="`background-color: ${color};`" @dragover.prevent @dragenter.prevent
         @drop="onDrop($event, props.id)">
         <div class="stage-header">
-            <div class="stage-arrow">
-                <img src="../assets/left.svg" alt="left" v-if="number !== 1" @click="goLeft(props.id)">
-            </div>
+            <ChevronLeftIcon :class="`size-8 ${number == 1 ? 'text-gray-500' : 'cursor-pointer'}`" disabled="number == 1"
+                @click="goLeft(props.id)" />
             <div class="stage-name" @click="openStageEditDialog(id)">
                 {{ name }}
             </div>
-            <div class="stage-arrow">
-                <img src="../assets/right.svg" alt="right" v-if="stagesLength !== number" @click="goRight(props.id)">
-            </div>
+            <ChevronRightIcon :class="`size-8 ${number == stagesLength ? 'text-gray-500' : 'cursor-pointer'}`"
+                disabled="number == stagesLength" @click="goRight(props.id)" />
         </div>
         <div class="stage-items">
             <div>

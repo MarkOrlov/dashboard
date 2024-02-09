@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref } from 'vue';
+import { ref } from 'vue';
 import { useTasksStore } from '@/stores/taskStore';
 
 const tasks = useTasksStore();

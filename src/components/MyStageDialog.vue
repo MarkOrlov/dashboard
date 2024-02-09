@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref } from 'vue';
+import { ref } from 'vue';
 import { useStagesStore } from '@/stores/stageStore';
 
 const stages = useStagesStore();
